@@ -1,0 +1,17 @@
+# Environnement virtuel
+.venv/
+venv/
+
+# Variables d'environnement / secrets
+.env
+
+# Fichiers Python compilés
+__pycache__/
+*.pyc
+
+# Fichiers PyCharm
+.idea/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
