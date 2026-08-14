@@ -1,0 +1,790 @@
+{
+  "restaurant": "La Capital",
+  "address": "207 Bd la Fayette, 62100 Calais",
+  "phone": "03 74 73 60 04",
+  "hours": "7j/7 de 11h00 à 00h00",
+  "halal": true,
+
+  "categories": [
+    {
+      "id": "burgers_classiques",
+      "name": "Burgers - Les Classiques",
+      "items": [
+        {
+          "id": "burger_cheese",
+          "name": "Cheese",
+          "description": "Steak, Cheddar",
+          "price": 4.50,
+          "sizes": [
+            {"name": "Seul", "price": 4.50},
+            {"name": "Menu", "price": 6.50}
+          ]
+        },
+        {
+          "id": "burger_double_cheese",
+          "name": "Double Cheese",
+          "description": "2 Steaks, Cheddar",
+          "price": 6.50,
+          "sizes": [
+            {"name": "Seul", "price": 6.50},
+            {"name": "Menu", "price": 7.50}
+          ]
+        },
+        {
+          "id": "burger_fish",
+          "name": "Fish",
+          "description": "Poisson Pané, Cheddar",
+          "price": 6.50,
+          "sizes": [
+            {"name": "Seul", "price": 6.50},
+            {"name": "Menu", "price": 7.50}
+          ]
+        },
+        {
+          "id": "burger_chicken",
+          "name": "Chicken",
+          "description": "Poulet Pané, Cheddar",
+          "price": 6.50,
+          "sizes": [
+            {"name": "Seul", "price": 6.50},
+            {"name": "Menu", "price": 7.50}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "burgers_signatures",
+      "name": "Burgers - Les Signatures",
+      "items": [
+        {
+          "id": "burger_chicago",
+          "name": "Chicago",
+          "description": "Steak, Bacon, Cornichons, Cheddar",
+          "price": 9.50,
+          "sizes": [
+            {"name": "Seul", "price": 9.50},
+            {"name": "Menu", "price": 11.50}
+          ]
+        },
+        {
+          "id": "burger_chevre_miel",
+          "name": "Chèvre Miel",
+          "description": "Steak, Chèvre, Miel, Cheddar",
+          "price": 9.50,
+          "sizes": [
+            {"name": "Seul", "price": 9.50},
+            {"name": "Menu", "price": 11.50}
+          ]
+        },
+        {
+          "id": "burger_lakers",
+          "name": "Lakers",
+          "description": "Steaks, Bacon, Cornichons, Cheddar",
+          "price": 9.50,
+          "sizes": [
+            {"name": "Seul", "price": 9.50},
+            {"name": "Menu", "price": 11.50}
+          ]
+        },
+        {
+          "id": "burger_texane",
+          "name": "Texane",
+          "description": "Steak, Galette PDT, Cheddar",
+          "price": 9.50,
+          "sizes": [
+            {"name": "Seul", "price": 9.50},
+            {"name": "Menu", "price": 11.50}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "burgers_maison",
+      "name": "Burgers - Maison",
+      "items": [
+        {
+          "id": "burger_big_kim",
+          "name": "Big Kim",
+          "description": "Poulet Pané, Bacon, Galette PDT, Cheddar",
+          "price": 9.50,
+          "sizes": [
+            {"name": "Seul", "price": 9.50},
+            {"name": "Menu", "price": 11.50}
+          ]
+        },
+        {
+          "id": "burger_la_capitale",
+          "name": "La Capitale",
+          "description": "Steak, Galette PDT, Raclette",
+          "price": 9.50,
+          "sizes": [
+            {"name": "Seul", "price": 9.50},
+            {"name": "Menu", "price": 11.50}
+          ]
+        },
+        {
+          "id": "burger_buffalo",
+          "name": "Buffalo",
+          "description": "Steak, Oeuf, Bacon, Cheddar",
+          "price": 9.50,
+          "sizes": [
+            {"name": "Seul", "price": 9.50},
+            {"name": "Menu", "price": 11.50}
+          ]
+        },
+        {
+          "id": "burger_frenchy",
+          "name": "Frenchy",
+          "description": "Steaks, Galette PDT, Cheddar",
+          "price": 9.50,
+          "sizes": [
+            {"name": "Seul", "price": 9.50},
+            {"name": "Menu", "price": 11.50}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sandwichs_classic",
+      "name": "Sandwichs - Classic",
+      "items": [
+        {
+          "id": "sandwich_kebab",
+          "name": "Kebab",
+          "description": "Viande de Kebab",
+          "price": 6.00,
+          "sizes": [
+            {"name": "Seul", "price": 6.00},
+            {"name": "Menu", "price": 8.00}
+          ]
+        },
+        {
+          "id": "sandwich_chicken",
+          "name": "Chicken",
+          "description": "Escalope, Cheddar",
+          "price": 6.00,
+          "sizes": [
+            {"name": "Seul", "price": 6.00},
+            {"name": "Menu", "price": 8.00}
+          ]
+        },
+        {
+          "id": "sandwich_merguez",
+          "name": "Merguez",
+          "description": "2 Merguez",
+          "price": 6.00,
+          "sizes": [
+            {"name": "Seul", "price": 6.00},
+            {"name": "Menu", "price": 8.00}
+          ]
+        },
+        {
+          "id": "sandwich_parisien",
+          "name": "Parisien",
+          "description": "Steak, Cheddar",
+          "price": 6.00,
+          "sizes": [
+            {"name": "Seul", "price": 6.00},
+            {"name": "Menu", "price": 8.00}
+          ]
+        },
+        {
+          "id": "sandwich_curry",
+          "name": "Curry",
+          "description": "Poulet Curry, Cheddar",
+          "price": 6.00,
+          "sizes": [
+            {"name": "Seul", "price": 6.00},
+            {"name": "Menu", "price": 8.00}
+          ]
+        },
+        {
+          "id": "sandwich_tikka",
+          "name": "Tikka",
+          "description": "Poulet Tandoori, Cheddar",
+          "price": 6.00,
+          "sizes": [
+            {"name": "Seul", "price": 6.00},
+            {"name": "Menu", "price": 8.00}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sandwichs_signatures",
+      "name": "Sandwichs - Nos Signatures",
+      "items": [
+        {
+          "id": "sandwich_capital",
+          "name": "Capital",
+          "description": "2 Steak, Bacon, Oeuf, Cheddar",
+          "price": 7.50,
+          "sizes": [
+            {"name": "Seul", "price": 7.50},
+            {"name": "Menu", "price": 9.00}
+          ]
+        },
+        {
+          "id": "sandwich_farmer",
+          "name": "Farmer",
+          "description": "2 Steak, Cordon Bleu, Cheddar",
+          "price": 7.50,
+          "sizes": [
+            {"name": "Seul", "price": 7.50},
+            {"name": "Menu", "price": 9.00}
+          ]
+        },
+        {
+          "id": "sandwich_supreme",
+          "name": "Supprème",
+          "description": "Kebab, Steak, Oeuf, Cheddar",
+          "price": 7.50,
+          "sizes": [
+            {"name": "Seul", "price": 7.50},
+            {"name": "Menu", "price": 9.00}
+          ]
+        },
+        {
+          "id": "sandwich_super_mix",
+          "name": "Super Mix",
+          "description": "Kebab, Merguez, Cheddar",
+          "price": 7.50,
+          "sizes": [
+            {"name": "Seul", "price": 7.50},
+            {"name": "Menu", "price": 9.00}
+          ]
+        },
+        {
+          "id": "sandwich_extra",
+          "name": "Extra",
+          "description": "Chicken Curry, Cordon Bleu, Cheddar",
+          "price": 7.50,
+          "sizes": [
+            {"name": "Seul", "price": 7.50},
+            {"name": "Menu", "price": 9.00}
+          ]
+        },
+        {
+          "id": "sandwich_chevre_miel",
+          "name": "Chèvre Miel",
+          "description": "Steak, Chèvre, Miel",
+          "price": 7.50,
+          "sizes": [
+            {"name": "Seul", "price": 7.50},
+            {"name": "Menu", "price": 9.00}
+          ]
+        },
+        {
+          "id": "sandwich_triple_x",
+          "name": "Triple X",
+          "description": "Steak, Galette PDT, Oeuf, Cheddar",
+          "price": 7.50,
+          "sizes": [
+            {"name": "Seul", "price": 7.50},
+            {"name": "Menu", "price": 9.00}
+          ]
+        },
+        {
+          "id": "sandwich_super_mix_2",
+          "name": "Super Mix 2",
+          "description": "Steak, Merguez, Oeuf, Cheddar",
+          "price": 7.50,
+          "sizes": [
+            {"name": "Seul", "price": 7.50},
+            {"name": "Menu", "price": 9.00}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "assiettes",
+      "name": "Nos Assiettes",
+      "description": "Viande au choix, Crudités, Sauce au choix",
+      "items": [
+        {
+          "id": "assiette_1_viande",
+          "name": "Assiette 1 Viande",
+          "description": "Viande au choix, crudités, sauce au choix",
+          "price": 10.00,
+          "sizes": null
+        },
+        {
+          "id": "assiette_2_viandes",
+          "name": "Assiette 2 Viandes",
+          "description": "2 viandes au choix, crudités, sauce au choix",
+          "price": 12.00,
+          "sizes": null
+        },
+        {
+          "id": "assiette_3_viandes",
+          "name": "Assiette 3 Viandes",
+          "description": "3 viandes au choix, crudités, sauce au choix",
+          "price": 14.00,
+          "sizes": null
+        }
+      ]
+    },
+    {
+      "id": "couscous_tunisien",
+      "name": "Couscous Tunisien",
+      "items": [
+        {
+          "id": "couscous_legumes",
+          "name": "Couscous Légumes",
+          "description": null,
+          "price": 9.00,
+          "sizes": null
+        },
+        {
+          "id": "couscous_poulet",
+          "name": "Couscous Poulet",
+          "description": null,
+          "price": 10.00,
+          "sizes": null
+        },
+        {
+          "id": "couscous_merguez",
+          "name": "Couscous Merguez",
+          "description": null,
+          "price": 10.00,
+          "sizes": null
+        },
+        {
+          "id": "couscous_agneau",
+          "name": "Couscous Agneau",
+          "description": null,
+          "price": 12.00,
+          "sizes": null
+        },
+        {
+          "id": "couscous_veau",
+          "name": "Couscous Veau",
+          "description": null,
+          "price": 11.00,
+          "sizes": null
+        },
+        {
+          "id": "couscous_royale",
+          "name": "Couscous Royale",
+          "description": null,
+          "price": 15.00,
+          "sizes": null
+        }
+      ]
+    },
+    {
+      "id": "poulet_piece",
+      "name": "Poulet à la pièce",
+      "items": [
+        {
+          "id": "poulet_1_pilon",
+          "name": "1 Pilon",
+          "description": null,
+          "price": 2.00,
+          "sizes": null
+        },
+        {
+          "id": "poulet_3_pilons",
+          "name": "3 Pilons",
+          "description": null,
+          "price": 5.00,
+          "sizes": null
+        },
+        {
+          "id": "poulet_cuisse",
+          "name": "Cuisse de Poulet",
+          "description": null,
+          "price": 4.00,
+          "sizes": null
+        },
+        {
+          "id": "poulet_blanc",
+          "name": "Blanc de Poulet",
+          "description": null,
+          "price": 4.00,
+          "sizes": null
+        }
+      ]
+    },
+    {
+      "id": "accompagnements",
+      "name": "Accompagnements",
+      "items": [
+        {
+          "id": "crinkle",
+          "name": "Crinkle",
+          "description": "Frites ondulées",
+          "price": 3.50,
+          "sizes": null
+        },
+        {
+          "id": "potatos",
+          "name": "Potatos",
+          "description": null,
+          "price": 3.50,
+          "sizes": null
+        },
+        {
+          "id": "crunchy",
+          "name": "Crunchy",
+          "description": null,
+          "price": 3.50,
+          "sizes": null
+        }
+      ]
+    },
+    {
+      "id": "pates",
+      "name": "Pâtes",
+      "description": "Spaghetti, Makaroni ou Penne au choix",
+      "items": [
+        {
+          "id": "pates_poulet",
+          "name": "Pâtes Poulet",
+          "description": null,
+          "price": 9.00,
+          "sizes": null
+        },
+        {
+          "id": "pates_agneau",
+          "name": "Pâtes Agneau",
+          "description": null,
+          "price": 10.00,
+          "sizes": null
+        },
+        {
+          "id": "pates_veau",
+          "name": "Pâtes Veau",
+          "description": null,
+          "price": 10.00,
+          "sizes": null
+        }
+      ]
+    },
+    {
+      "id": "tex_mex",
+      "name": "Tex Mex",
+      "items": [
+        {
+          "id": "nuggets",
+          "name": "Nuggets",
+          "description": "Portion classique",
+          "price": 5.00,
+          "sizes": null
+        },
+        {
+          "id": "mozza_sticks",
+          "name": "Mozza Sticks",
+          "description": "Portion classique",
+          "price": 5.00,
+          "sizes": null
+        },
+        {
+          "id": "chili_cheese",
+          "name": "Chili Cheese",
+          "description": "Portion classique",
+          "price": 5.00,
+          "sizes": null
+        },
+        {
+          "id": "wings",
+          "name": "Wings",
+          "description": "Nuggets - ailes de poulet",
+          "price": 6.50,
+          "sizes": [
+            {"name": "5 pièces", "price": 6.50},
+            {"name": "10 pièces", "price": 11.50},
+            {"name": "XL - 30 pièces", "price": 28.00}
+          ]
+        },
+        {
+          "id": "tenders",
+          "name": "Tenders",
+          "description": "Mozza Sticks",
+          "price": 6.50,
+          "sizes": [
+            {"name": "5 pièces", "price": 6.50},
+            {"name": "10 pièces", "price": 11.50},
+            {"name": "XL - 25 pièces", "price": 28.00}
+          ]
+        },
+        {
+          "id": "mixte",
+          "name": "Mixte",
+          "description": "Chili Cheese - wings et tenders",
+          "price": 12.00,
+          "sizes": [
+            {"name": "5 Tenders + 5 Wings", "price": 12.00},
+            {"name": "XL - 10 Wings + 10 Tenders", "price": 25.00}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "milkshakes",
+      "name": "MilkShake",
+      "description": "Nutella, Banane, M&M's, Oreo au choix - prix unique",
+      "items": [
+        {
+          "id": "milkshake",
+          "name": "MilkShake",
+          "description": "Au choix : Nutella, Banane, M&M's, Oreo",
+          "price": 5.00,
+          "sizes": null
+        }
+      ]
+    },
+    {
+      "id": "burgers_sucres",
+      "name": "Burger Sucré",
+      "items": [
+        {
+          "id": "burger_sucre_nutella",
+          "name": "Nutella",
+          "description": null,
+          "price": 4.50,
+          "sizes": null
+        },
+        {
+          "id": "burger_sucre_nutella_banane",
+          "name": "Nutella Banane",
+          "description": null,
+          "price": 5.50,
+          "sizes": null
+        },
+        {
+          "id": "burger_sucre_nutella_fraise",
+          "name": "Nutella Fraise",
+          "description": null,
+          "price": 5.50,
+          "sizes": null
+        }
+      ]
+    },
+    {
+      "id": "desserts",
+      "name": "Desserts",
+      "items": [
+        {
+          "id": "tiramisu",
+          "name": "Tiramisu",
+          "description": "Fait maison",
+          "price": 3.50,
+          "sizes": null
+        },
+        {
+          "id": "tarte_daim",
+          "name": "Tarte au Daim",
+          "description": null,
+          "price": 3.00,
+          "sizes": null
+        }
+      ]
+    },
+    {
+      "id": "boissons",
+      "name": "Boissons",
+      "items": [
+        {
+          "id": "boisson_33cl",
+          "name": "Boisson 33cl",
+          "description": "Coca-Cola, 7Up, Fanta, Orangina...",
+          "price": 1.50,
+          "sizes": null
+        },
+        {
+          "id": "red_bull",
+          "name": "Red Bull",
+          "description": null,
+          "price": 3.00,
+          "sizes": null
+        },
+        {
+          "id": "boisson_1l50",
+          "name": "Boisson 1L50",
+          "description": null,
+          "price": 3.50,
+          "sizes": null
+        }
+      ]
+    },
+    {
+      "id": "tacos",
+      "name": "Tacos",
+      "description": "Choix du nombre de viandes, garnitures et sauces personnalisables",
+      "items": [
+        {
+          "id": "tacos",
+          "name": "Tacos",
+          "description": "Viande(s) au choix + sauce(s) au choix",
+          "price": 7.00,
+          "sizes": [
+            {"name": "M - 1 Viande", "price": 7.00},
+            {"name": "L - 2 Viandes", "price": 8.00},
+            {"name": "XL - 3 Viandes", "price": 9.00}
+          ]
+        }
+      ],
+      "customization": {
+        "meat_choices": [
+          "Kebab", "Chicken Curry", "Escalope", "Merguez", "Poulet Pané",
+          "Viande Hachée", "Chicken Tandoori", "Cordon Bleu", "Tenders", "Nuggets"
+        ],
+        "extras": [
+          {"name": "Raclette", "price": 1.50},
+          {"name": "Boursin", "price": 1.50},
+          {"name": "Chèvre", "price": 1.50},
+          {"name": "Bacon", "price": 1.50},
+          {"name": "Oeuf", "price": 1.50},
+          {"name": "Cheddar", "price": 1.50},
+          {"name": "Vache qui rit", "price": 1.50},
+          {"name": "Mozza", "price": 1.50},
+          {"name": "Jambon", "price": 1.50},
+          {"name": "Champignons", "price": 1.50}
+        ],
+        "sauces": [
+          "Ketchup", "Harissa", "Samourai", "Moutarde", "Andalouse",
+          "Poivre", "Chili Thai", "Mayonnaise", "Algérienne", "Blanche",
+          "Barbecue", "Tartare", "Curry", "Cheesy"
+        ]
+      }
+    },
+    {
+      "id": "tacos_gratine",
+      "name": "Tacos Gratiné",
+      "description": "Supplément sur un tacos existant",
+      "items": [
+        {
+          "id": "supplement_gratine",
+          "name": "Option Gratiné",
+          "description": "Mozza, Raclette, Cheddar, Bacon, Lardons ou Chèvre Miel",
+          "price": 2.00,
+          "sizes": null
+        }
+      ]
+    },
+    {
+      "id": "baguette_gratinee",
+      "name": "Baguette Gratinée",
+      "items": [
+        {
+          "id": "baguette_1_viande",
+          "name": "Baguette Gratinée 1 Viande",
+          "description": null,
+          "price": 7.00,
+          "sizes": null
+        },
+        {
+          "id": "baguette_2_viandes",
+          "name": "Baguette Gratinée 2 Viandes",
+          "description": null,
+          "price": 8.00,
+          "sizes": null
+        }
+      ]
+    },
+    {
+      "id": "tasty_crousty",
+      "name": "Tasty Crousty",
+      "items": [
+        {
+          "id": "tasty_crousty",
+          "name": "Tasty Crousty",
+          "description": "Riz blanc, accompagné d'une sauce fromagère crémeuse Chili Thai, et viande (Capital Food)",
+          "price": 9.50,
+          "sizes": null
+        }
+      ]
+    },
+    {
+      "id": "cheese_naan",
+      "name": "Cheese Naan",
+      "items": [
+        {
+          "id": "naan_kebab",
+          "name": "Naan Kebab",
+          "description": "Émincé de Kebab",
+          "price": 9.50,
+          "sizes": null
+        },
+        {
+          "id": "naan_tenders",
+          "name": "Naan Tenders",
+          "description": "Tenders, Cheddar",
+          "price": 10.50,
+          "sizes": null
+        },
+        {
+          "id": "naan_curry",
+          "name": "Naan Curry",
+          "description": "Poulet Curry, Cheddar",
+          "price": 10.00,
+          "sizes": null
+        },
+        {
+          "id": "naan_tandoori",
+          "name": "Naan Tandoori",
+          "description": "Poulet Tandoori, Cheddar",
+          "price": 10.00,
+          "sizes": null
+        }
+      ]
+    },
+    {
+      "id": "pizzas_tomate",
+      "name": "Pizzas - Base Sauce Tomate",
+      "description": "Junior 26cm / Senior 33cm / Mega 40cm",
+      "items": [
+        {"id": "pizza_margherita", "name": "Margherita", "description": "Sauce Tomate, Mozzarella", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_reine", "name": "Reine", "description": "Mozzarella, Jambon, Champignons", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_calzone", "name": "Calzone", "description": "Mozzarella, Viande au Choix", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_royale", "name": "Royale", "description": "Mozzarella, Viande Hachée, Champignons, Oeuf", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_napolitaine", "name": "Napolitaine", "description": "Mozzarella, Anchois, Câpres, Olives", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_4_saisons", "name": "4 Saisons", "description": "Mozzarella, Jambon, Poivrons, Champignons, Artichauts", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_mexicaine", "name": "La Mexicaine", "description": "Mozzarella, Merguez, Chorizo, Olives, Poivrons", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_vegetarienne", "name": "Végétarienne", "description": "Mozzarella, Champignons, Poivrons, Tomates, Artichauts", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_neptune", "name": "Neptune", "description": "Mozzarella, Thon, Oeuf, Tomates, Olives", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_saumon_tomate", "name": "Saumon", "description": "Mozzarella, Saumon, Tomates, Citron", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_orientale", "name": "L'Orientale", "description": "Mozzarella, Merguez, Poivrons, Oignons, Oeuf, Olives", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_perso", "name": "La Perso", "description": "Mozzarella, 3 ingrédients au choix", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_fruits_de_mer", "name": "Fruits de Mer", "description": "Mozzarella, Cocktail de fruits de mer", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_4_fromages_tomate", "name": "4 Fromages", "description": "Mozzarella, Chèvre, Bleu, Brie", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]}
+      ]
+    },
+    {
+      "id": "pizzas_creme",
+      "name": "Pizzas - Base Crème Fraîche",
+      "description": "Junior 26cm / Senior 33cm / Mega 40cm",
+      "items": [
+        {"id": "pizza_fermiere", "name": "La Fermière", "description": "Mozzarella, Poulet, Pomme de terre", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_raclette", "name": "Racelette", "description": "Mozzarella, Poulet, Raclette, Pomme de terre", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_chevre_miel", "name": "Chèvre Miel", "description": "Mozzarella, Chèvre, Miel", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_miami", "name": "Miami", "description": "Mozzarella, Viande Hachée, Pomme de terre, Boursin", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_curry", "name": "Curry", "description": "Mozzarella, Poulet, Sauce Curry, Champignons", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_saumon_creme", "name": "Saumon", "description": "Mozzarella, Saumon fumé, Citron", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_supreme", "name": "Supprème", "description": "Mozzarella, Saumon, Pomme de terre, Boursin", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_4_fromages_creme", "name": "4 Fromges", "description": "Mozzarella, Bleu, Brie, Chèvre", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_tartiflette", "name": "Tartiflette", "description": "Mozzarella, Lardons, Pomme de terre, Reblochon", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_calaisienne", "name": "Calaisienne", "description": "Mozzarella, Jambon, Chèvre, Oignons", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_kebab", "name": "Kebab", "description": "Mozzarella, Kebab, Pomme de terre", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_3_jambons", "name": "3 Jambons", "description": "Mozzarella, Jambon, Lardons, Chorizo", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_camembert", "name": "Camembert", "description": "Mozzarella, Viande Hachée, Camembert", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]}
+      ]
+    },
+    {
+      "id": "pizzas_speciale",
+      "name": "Pizzas - Base Spéciale",
+      "description": "Junior 26cm / Senior 33cm / Mega 40cm",
+      "items": [
+        {"id": "pizza_la_capitale", "name": "La Capitale", "description": "Base au choix, Mozzarella, Jambon, Poulet, Merguez", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_bba", "name": "BBA", "description": "Sauce Barbecue, Mozzarella, Viande Hachée, Merguez", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_new_yorkaise", "name": "New Yorkaise", "description": "Sauce Algérienne, Mozzarella, Poulet, Viande Hachée, Merguez", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_pepper", "name": "Pepper", "description": "Crème Fraîche, Mozzarella, Viande Hachée, Cheddar, Sauce Poivre", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_burger", "name": "Burger", "description": "Sauce Biggy, Mozzarella, Viande Hachée, Bacon, Cheddar", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_tacos", "name": "Tacos", "description": "Crème Fraîche, Kebab, Poulet Marinée, Sauce Fromagère, Cheddar", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_pimento", "name": "Pimento", "description": "Sauce Chili-Thai, Mozzarella, Viande Hachée, Merguez, Poivrons, Olives", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]},
+        {"id": "pizza_calabraise", "name": "La Calabraise", "description": "Crème Fraîche, Sauce BBQ, Viande Hachée, Chorizo, Raclette, Pomme de terre", "price": 7.50, "sizes": [{"name": "Junior", "price": 7.50}, {"name": "Senior", "price": 16.00}, {"name": "Mega", "price": 19.00}]}
+      ]
+    }
+  ]
+}
