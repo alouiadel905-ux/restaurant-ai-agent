@@ -34,7 +34,8 @@ RÈGLES :
       "item_id": "identifiant_exact_du_menu",
       "name": "Nom lisible du produit",
       "quantity": 1,
-      "size": "nom de la taille choisie, ou null si non applicable",
+      "size": "nom EXACT de la taille tel qu'écrit dans le menu (ex: 'M - 1 Viande', 'Senior'), ou null si non applicable",
+      "meats": ["liste des viandes choisies, vide si non applicable (ex: tacos, assiettes, couscous)"],
       "extras": ["liste des extras demandés, vide si aucun"],
       "sauces": ["liste des sauces demandées, vide si aucune"],
       "unit_price": 0.00
@@ -43,9 +44,11 @@ RÈGLES :
   "status": "in_progress"
 }}
 - "item_id" doit correspondre EXACTEMENT à un id présent dans le menu ci-dessus.
+- "size" doit reprendre le nom de taille EXACT du menu (copie-le tel quel, ne le raccourcis pas).
+- "meats" est important pour les produits avec un choix de viande obligatoire (Tacos, Assiettes, Couscous, Calzone, La Perso) : n'oublie jamais de le remplir si le client a précisé une viande, même si le nombre de viandes attendu (M/L/XL, 1/2/3 Viandes) n'est pas encore atteint.
 - "unit_price" doit être le prix correspondant à la taille choisie (ou le prix simple si pas de taille).
 - Si le client n'a encore rien commandé de clair, retourne une liste "items" vide.
-- Si une information nécessaire n'est pas encore connue (ex: taille non précisée), ne l'invente pas : mets null.
+- Si une information nécessaire n'est pas encore connue (ex: taille non précisée, viande non précisée), ne l'invente pas : mets null ou liste vide selon le champ.
 - "status" vaut "confirmed" uniquement si le client a explicitement validé sa commande, sinon "in_progress".
 """
 
