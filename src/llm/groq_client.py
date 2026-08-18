@@ -12,7 +12,7 @@ from groq import Groq
 
 # Nom du modèle utilisé pour toutes les conversations de l'agent.
 # Centralisé ici pour ne le changer qu'à un seul endroit si besoin.
-MODEL_NAME = "llama-3.3-70b-versatile"
+MODEL_NAME = "openai/gpt-oss-120b"
 
 
 def get_client() -> Groq:

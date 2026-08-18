@@ -4,9 +4,12 @@ de prise de commande. Construit les instructions données à l'IA
 (prompt système) et gère la boucle de conversation en terminal.
 """
 
+import json
+
 from src.llm.groq_client import get_client, send_message
 from src.menu.loader import load_menu
 from src.menu.formatter import format_menu_for_prompt
+from src.agent.order_extractor import extract_order
 
 
 def build_system_prompt(menu_text: str) -> str:
@@ -37,6 +40,8 @@ def run_conversation() -> None:
     """
     Lance une boucle de conversation dans le terminal entre
     l'utilisateur et l'agent. Tape 'quit' pour arrêter.
+    Tape '/commande' pour voir la commande structurée extraite
+    à partir de la conversation jusqu'ici.
     """
     client = get_client()
     menu = load_menu()
@@ -48,7 +53,7 @@ def run_conversation() -> None:
         {"role": "system", "content": build_system_prompt(menu_text)}
     ]
 
-    print("=== Agent La Capital (tape 'quit' pour arrêter) ===\n")
+    print("=== Agent La Capital (tape 'quit' pour arrêter, '/commande' pour voir la commande extraite) ===\n")
 
     while True:
         user_input = input("Client : ").strip()
@@ -58,6 +63,15 @@ def run_conversation() -> None:
             break
 
         if not user_input:
+            continue
+
+        # Commande spéciale de debug : affiche la commande structurée
+        # extraite à partir de la conversation jusqu'ici.
+        if user_input == "/commande":
+            order = extract_order(client, messages, menu)
+            print("\n--- Commande extraite ---")
+            print(json.dumps(order, indent=2, ensure_ascii=False))
+            print("--------------------------\n")
             continue
 
         # On ajoute le message du client à l'historique

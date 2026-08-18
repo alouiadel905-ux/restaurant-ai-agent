@@ -91,6 +91,29 @@ def format_menu_for_prompt(menu: dict) -> str:
     return "\n".join(lines)
 
 
+def format_menu_with_ids(menu: dict) -> str:
+    """
+    Variante de format_menu_for_prompt() qui inclut l'identifiant
+    technique (id) de chaque item. Utilisée uniquement pour
+    l'extraction de commande, afin que l'IA puisse répondre avec
+    des identifiants exacts plutôt que des noms libres (qui peuvent
+    se ressembler entre catégories, ex: "Chèvre Miel" existe en
+    burger, en sandwich et en pizza).
+    """
+    lines = []
+
+    for category in menu["categories"]:
+        lines.append(f"=== {category['name'].upper()} ===")
+
+        for item in category["items"]:
+            price_info = _format_item(item)
+            lines.append(f"[id: {item['id']}] {price_info}")
+
+        lines.append("")
+
+    return "\n".join(lines)
+
+
 if __name__ == "__main__":
     # Test rapide : génère le texte et l'affiche dans le terminal
     menu = load_menu()
