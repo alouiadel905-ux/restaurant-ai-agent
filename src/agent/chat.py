@@ -11,6 +11,7 @@ from src.menu.loader import load_menu
 from src.menu.formatter import format_menu_for_prompt
 from src.agent.order_extractor import extract_order
 from src.order.calculator import calculate_order_total
+from src.order.storage import save_confirmed_order
 
 
 def build_system_prompt(menu_text: str) -> str:
@@ -38,6 +39,7 @@ RÈGLES IMPORTANTES :
   4. Attendre une réponse affirmative claire du client (ex: "oui", "c'est bon", "confirmé") avant de considérer la commande comme validée.
 - Ne considère JAMAIS une commande comme confirmée sur la seule base d'un ajout de produit ou d'un silence — il faut une validation explicite et sans ambiguïté du client, après avoir vu le récapitulatif complet.
 - Si le client modifie encore quelque chose après le récapitulatif, refais un récapitulatif à jour avant de redemander confirmation.
+- Une fois la commande confirmée, demande le nom du client et un numéro de téléphone (nécessaires pour la préparation), sauf si déjà donnés.
 
 Voici le menu complet du restaurant :
 
@@ -51,16 +53,21 @@ def run_conversation() -> None:
     l'utilisateur et l'agent. Tape 'quit' pour arrêter.
     Tape '/commande' pour voir la commande extraite par l'IA.
     Tape '/total' pour voir la commande vérifiée par le calcul Python.
+
+    Dès que le client confirme sa commande ET donne ses coordonnées,
+    elle est automatiquement sauvegardée dans data/orders.json.
     """
     client = get_client()
     menu = load_menu()
     menu_text = format_menu_for_prompt(menu)
 
-    # L'historique de la conversation commence avec les instructions
-    # système (invisibles pour l'utilisateur, mais lues par l'IA).
     messages = [
         {"role": "system", "content": build_system_prompt(menu_text)}
     ]
+
+    # Empêche de sauvegarder la même commande plusieurs fois si la
+    # conversation continue après confirmation (ex: le client discute encore).
+    order_already_saved = False
 
     print("=== Agent La Capital (tape 'quit' pour arrêter, '/commande' ou '/total') ===\n")
 
@@ -74,8 +81,6 @@ def run_conversation() -> None:
         if not user_input:
             continue
 
-        # Commande spéciale de debug : affiche la commande structurée
-        # extraite à partir de la conversation jusqu'ici (côté IA).
         if user_input == "/commande":
             order = extract_order(client, messages, menu)
             print("\n--- Commande extraite (par l'IA) ---")
@@ -83,8 +88,6 @@ def run_conversation() -> None:
             print("--------------------------------------\n")
             continue
 
-        # Commande spéciale de debug : affiche la commande recalculée
-        # et vérifiée par notre code Python (prix garantis exacts).
         if user_input == "/total":
             order = extract_order(client, messages, menu)
             verified = calculate_order_total(order, menu)
@@ -93,17 +96,31 @@ def run_conversation() -> None:
             print("------------------------------------------\n")
             continue
 
-        # On ajoute le message du client à l'historique
         messages.append({"role": "user", "content": user_input})
 
-        # On envoie tout l'historique à Groq et on récupère la réponse
         reply = send_message(client, messages)
-
-        # On ajoute la réponse de l'IA à l'historique, pour qu'elle
-        # se souvienne de ce qu'elle a dit lors du prochain échange
         messages.append({"role": "assistant", "content": reply})
 
         print(f"Agent : {reply}\n")
+
+        # Après chaque échange, on vérifie discrètement si la commande
+        # vient d'être confirmée ET que les coordonnées du client sont
+        # connues, pour la sauvegarder automatiquement une seule fois.
+        if not order_already_saved:
+            order = extract_order(client, messages, menu)
+
+            is_confirmed = order.get("status") == "confirmed"
+            has_contact_info = order.get("customer_name") and order.get("customer_phone")
+
+            if is_confirmed and has_contact_info:
+                verified = calculate_order_total(order, menu)
+                saved = save_confirmed_order(
+                    verified,
+                    customer_name=order.get("customer_name"),
+                    customer_phone=order.get("customer_phone"),
+                )
+                order_already_saved = True
+                print(f"[Système] Commande enregistrée sous le numéro {saved['order_id']}\n")
 
 
 if __name__ == "__main__":

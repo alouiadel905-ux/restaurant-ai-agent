@@ -41,6 +41,8 @@ RÈGLES :
       "unit_price": 0.00
     }}
   ],
+  "customer_name": "nom du client s'il a été donné, sinon null",
+  "customer_phone": "numéro de téléphone du client s'il a été donné, sinon null",
   "status": "in_progress"
 }}
 - "item_id" doit correspondre EXACTEMENT à un id présent dans le menu ci-dessus.
@@ -48,7 +50,7 @@ RÈGLES :
 - "meats" est important pour les produits avec un choix de viande obligatoire (Tacos, Assiettes, Couscous, Calzone, La Perso) : n'oublie jamais de le remplir si le client a précisé une viande, même si le nombre de viandes attendu (M/L/XL, 1/2/3 Viandes) n'est pas encore atteint.
 - "unit_price" doit être le prix correspondant à la taille choisie (ou le prix simple si pas de taille).
 - Si le client n'a encore rien commandé de clair, retourne une liste "items" vide.
-- Si une information nécessaire n'est pas encore connue (ex: taille non précisée, viande non précisée), ne l'invente pas : mets null ou liste vide selon le champ.
+- Si une information nécessaire n'est pas encore connue (ex: taille non précisée, viande non précisée, nom non donné), ne l'invente pas : mets null ou liste vide selon le champ.
 - "status" vaut "confirmed" uniquement si le client a explicitement validé sa commande, sinon "in_progress".
 """
 
