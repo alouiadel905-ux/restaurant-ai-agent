@@ -10,6 +10,7 @@ from src.llm.groq_client import get_client, send_message
 from src.menu.loader import load_menu
 from src.menu.formatter import format_menu_for_prompt
 from src.agent.order_extractor import extract_order
+from src.order.calculator import calculate_order_total
 
 
 def build_system_prompt(menu_text: str) -> str:
@@ -48,8 +49,8 @@ def run_conversation() -> None:
     """
     Lance une boucle de conversation dans le terminal entre
     l'utilisateur et l'agent. Tape 'quit' pour arrêter.
-    Tape '/commande' pour voir la commande structurée extraite
-    à partir de la conversation jusqu'ici.
+    Tape '/commande' pour voir la commande extraite par l'IA.
+    Tape '/total' pour voir la commande vérifiée par le calcul Python.
     """
     client = get_client()
     menu = load_menu()
@@ -61,7 +62,7 @@ def run_conversation() -> None:
         {"role": "system", "content": build_system_prompt(menu_text)}
     ]
 
-    print("=== Agent La Capital (tape 'quit' pour arrêter, '/commande' pour voir la commande extraite) ===\n")
+    print("=== Agent La Capital (tape 'quit' pour arrêter, '/commande' ou '/total') ===\n")
 
     while True:
         user_input = input("Client : ").strip()
@@ -74,12 +75,22 @@ def run_conversation() -> None:
             continue
 
         # Commande spéciale de debug : affiche la commande structurée
-        # extraite à partir de la conversation jusqu'ici.
+        # extraite à partir de la conversation jusqu'ici (côté IA).
         if user_input == "/commande":
             order = extract_order(client, messages, menu)
-            print("\n--- Commande extraite ---")
+            print("\n--- Commande extraite (par l'IA) ---")
             print(json.dumps(order, indent=2, ensure_ascii=False))
-            print("--------------------------\n")
+            print("--------------------------------------\n")
+            continue
+
+        # Commande spéciale de debug : affiche la commande recalculée
+        # et vérifiée par notre code Python (prix garantis exacts).
+        if user_input == "/total":
+            order = extract_order(client, messages, menu)
+            verified = calculate_order_total(order, menu)
+            print("\n--- Commande vérifiée (calcul Python) ---")
+            print(json.dumps(verified, indent=2, ensure_ascii=False))
+            print("------------------------------------------\n")
             continue
 
         # On ajoute le message du client à l'historique
