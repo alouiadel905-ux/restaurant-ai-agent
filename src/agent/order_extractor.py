@@ -7,10 +7,25 @@ uniquement à cette tâche d'analyse et de structuration.
 """
 
 import json
-from groq import Groq
+from groq import Groq, APIError, APIConnectionError, RateLimitError
 
 from src.llm.groq_client import MODEL_NAME
 from src.menu.formatter import format_menu_with_ids
+
+
+def _empty_order() -> dict:
+    """
+    Retourne une commande vide et sûre, utilisée comme filet de
+    sécurité si l'extraction échoue pour une raison quelconque
+    (JSON malformé, IA indisponible). Mieux vaut une commande vide
+    et explicite qu'un plantage du programme.
+    """
+    return {
+        "items": [],
+        "customer_name": None,
+        "customer_phone": None,
+        "status": "in_progress",
+    }
 
 
 def _build_extraction_prompt(menu_text_with_ids: str) -> str:
@@ -74,6 +89,11 @@ def extract_order(client: Groq, conversation_messages: list[dict], menu: dict) -
     """
     Analyse l'historique de conversation et retourne la commande
     structurée sous forme de dictionnaire Python.
+
+    En cas d'échec (IA indisponible, JSON malformé), retourne une
+    commande vide plutôt que de faire planter le programme : mieux
+    vaut redemander poliment au client que de crasher en pleine
+    conversation.
     """
     menu_text_with_ids = format_menu_with_ids(menu)
     transcript = _build_transcript(conversation_messages)
@@ -83,11 +103,22 @@ def extract_order(client: Groq, conversation_messages: list[dict], menu: dict) -
         {"role": "user", "content": f"Voici la conversation à analyser :\n\n{transcript}"},
     ]
 
-    response = client.chat.completions.create(
-        model=MODEL_NAME,
-        messages=extraction_messages,
-        response_format={"type": "json_object"},
-    )
+    try:
+        response = client.chat.completions.create(
+            model=MODEL_NAME,
+            messages=extraction_messages,
+            response_format={"type": "json_object"},
+        )
+        raw_content = response.choices[0].message.content
+        return json.loads(raw_content)
 
-    raw_content = response.choices[0].message.content
-    return json.loads(raw_content)
+    except (RateLimitError, APIConnectionError, APIError):
+        # L'IA n'a pas pu être contactée (réseau, quota, erreur serveur) :
+        # on retourne une commande vide, le système appelant décidera
+        # quoi faire (ex: ignorer silencieusement ce tour-ci).
+        return _empty_order()
+
+    except json.JSONDecodeError:
+        # L'IA a répondu, mais avec un JSON invalide (rare avec le
+        # mode json_object, mais possible). Même filet de sécurité.
+        return _empty_order()

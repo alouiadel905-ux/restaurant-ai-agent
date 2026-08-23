@@ -6,7 +6,7 @@ de prise de commande. Construit les instructions données à l'IA
 
 import json
 
-from src.llm.groq_client import get_client, send_message
+from src.llm.groq_client import get_client, send_message, LLMUnavailableError
 from src.menu.loader import load_menu
 from src.menu.formatter import format_menu_for_prompt
 from src.agent.order_extractor import extract_order
@@ -40,6 +40,7 @@ RÈGLES IMPORTANTES :
 - Ne considère JAMAIS une commande comme confirmée sur la seule base d'un ajout de produit ou d'un silence — il faut une validation explicite et sans ambiguïté du client, après avoir vu le récapitulatif complet.
 - Si le client modifie encore quelque chose après le récapitulatif, refais un récapitulatif à jour avant de redemander confirmation.
 - Une fois la commande confirmée, demande le nom du client et un numéro de téléphone (nécessaires pour la préparation), sauf si déjà donnés.
+- Ne considère jamais qu'une commande est valide si elle ne contient aucun produit : si le client tente de confirmer sans avoir rien commandé, explique-lui poliment qu'il doit d'abord choisir au moins un produit.
 
 Voici le menu complet du restaurant :
 
@@ -56,6 +57,10 @@ def run_conversation() -> None:
 
     Dès que le client confirme sa commande ET donne ses coordonnées,
     elle est automatiquement sauvegardée dans data/orders.json.
+
+    Résistant aux pannes : si l'IA est temporairement indisponible
+    (réseau, quota), le client reçoit un message clair au lieu
+    d'un plantage du programme.
     """
     client = get_client()
     menu = load_menu()
@@ -65,8 +70,6 @@ def run_conversation() -> None:
         {"role": "system", "content": build_system_prompt(menu_text)}
     ]
 
-    # Empêche de sauvegarder la même commande plusieurs fois si la
-    # conversation continue après confirmation (ex: le client discute encore).
     order_already_saved = False
 
     print("=== Agent La Capital (tape 'quit' pour arrêter, '/commande' ou '/total') ===\n")
@@ -98,21 +101,34 @@ def run_conversation() -> None:
 
         messages.append({"role": "user", "content": user_input})
 
-        reply = send_message(client, messages)
-        messages.append({"role": "assistant", "content": reply})
+        # On protège l'appel principal : si l'IA est indisponible,
+        # le client reçoit un message clair, la conversation continue
+        # au lieu de planter (le message utilisateur reste en historique
+        # pour être retraité au prochain tour).
+        try:
+            reply = send_message(client, messages)
+        except LLMUnavailableError as e:
+            print(f"Agent : Désolé, un problème technique m'empêche de répondre "
+                  f"pour le moment ({e}). Peux-tu répéter dans quelques instants ?\n")
+            messages.pop()  # on retire le message non traité pour éviter un historique incohérent
+            continue
 
+        messages.append({"role": "assistant", "content": reply})
         print(f"Agent : {reply}\n")
 
         # Après chaque échange, on vérifie discrètement si la commande
         # vient d'être confirmée ET que les coordonnées du client sont
         # connues, pour la sauvegarder automatiquement une seule fois.
+        # On vérifie aussi qu'il y a bien au moins un produit : une
+        # commande "confirmée" mais vide ne doit jamais être enregistrée.
         if not order_already_saved:
             order = extract_order(client, messages, menu)
 
             is_confirmed = order.get("status") == "confirmed"
             has_contact_info = order.get("customer_name") and order.get("customer_phone")
+            has_items = len(order.get("items", [])) > 0
 
-            if is_confirmed and has_contact_info:
+            if is_confirmed and has_contact_info and has_items:
                 verified = calculate_order_total(order, menu)
                 saved = save_confirmed_order(
                     verified,
