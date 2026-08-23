@@ -8,6 +8,7 @@ http://127.0.0.1:8000/docs
 """
 
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from src.llm.groq_client import get_client, send_message, LLMUnavailableError
@@ -17,9 +18,20 @@ from src.agent.chat import build_system_prompt
 from src.agent.order_extractor import extract_order
 from src.order.calculator import calculate_order_total
 from src.order.storage import save_confirmed_order
+from src.order.validation import validate_and_normalize_phone
 from src.api.sessions import create_session, get_session
 
 app = FastAPI(title="La Capital - Agent IA Restaurant")
+
+# Autorise notre future page web de test (ouverte en local) à
+# contacter cette API. En production, on restreindrait cette liste
+# aux domaines réellement autorisés plutôt que d'ouvrir à tous ("*").
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Ces éléments sont chargés UNE SEULE FOIS au démarrage du serveur
 # (le menu ne change pas entre deux requêtes, pas besoin de le
@@ -85,7 +97,8 @@ def chat(request: ChatRequest):
         order = extract_order(client, session["messages"], menu)
 
         is_confirmed = order.get("status") == "confirmed"
-        has_contact_info = order.get("customer_name") and order.get("customer_phone")
+        valid_phone = validate_and_normalize_phone(order.get("customer_phone"))
+        has_contact_info = bool(order.get("customer_name")) and bool(valid_phone)
         has_items = len(order.get("items", [])) > 0
 
         if is_confirmed and has_contact_info and has_items:
@@ -93,7 +106,7 @@ def chat(request: ChatRequest):
             save_confirmed_order(
                 verified,
                 customer_name=order.get("customer_name"),
-                customer_phone=order.get("customer_phone"),
+                customer_phone=valid_phone,
             )
             session["order_saved"] = True
             order_confirmed = True

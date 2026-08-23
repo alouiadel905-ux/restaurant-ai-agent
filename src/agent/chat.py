@@ -12,6 +12,7 @@ from src.menu.formatter import format_menu_for_prompt
 from src.agent.order_extractor import extract_order
 from src.order.calculator import calculate_order_total
 from src.order.storage import save_confirmed_order
+from src.order.validation import validate_and_normalize_phone
 
 
 def build_system_prompt(menu_text: str) -> str:
@@ -40,6 +41,8 @@ RÈGLES IMPORTANTES :
 - Ne considère JAMAIS une commande comme confirmée sur la seule base d'un ajout de produit ou d'un silence — il faut une validation explicite et sans ambiguïté du client, après avoir vu le récapitulatif complet.
 - Si le client modifie encore quelque chose après le récapitulatif, refais un récapitulatif à jour avant de redemander confirmation.
 - Une fois la commande confirmée, demande le nom du client et un numéro de téléphone (nécessaires pour la préparation), sauf si déjà donnés.
+- Le numéro de téléphone doit être un numéro français valide à 10 chiffres (ex: 06 12 34 56 78). Si le numéro donné ne fait pas 10 chiffres ou semble invalide, demande poliment au client de le répéter ou de le corriger AVANT de considérer la commande comme complète.
+- IMPORTANT sur les tacos : la taille (M/L/XL) est directement déterminée par le NOMBRE de viandes choisies : 1 viande = taille M, 2 viandes = taille L, 3 viandes = taille XL. Si le client précise le nombre de viandes ou énumère 2 ou 3 viandes différentes, DÉDUIS automatiquement la taille correspondante — ne redemande PAS la taille séparément, ce serait redondant et agaçant pour le client.
 - Ne considère jamais qu'une commande est valide si elle ne contient aucun produit : si le client tente de confirmer sans avoir rien commandé, explique-lui poliment qu'il doit d'abord choisir au moins un produit.
 
 Voici le menu complet du restaurant :
@@ -125,7 +128,8 @@ def run_conversation() -> None:
             order = extract_order(client, messages, menu)
 
             is_confirmed = order.get("status") == "confirmed"
-            has_contact_info = order.get("customer_name") and order.get("customer_phone")
+            valid_phone = validate_and_normalize_phone(order.get("customer_phone"))
+            has_contact_info = bool(order.get("customer_name")) and bool(valid_phone)
             has_items = len(order.get("items", [])) > 0
 
             if is_confirmed and has_contact_info and has_items:
@@ -133,7 +137,7 @@ def run_conversation() -> None:
                 saved = save_confirmed_order(
                     verified,
                     customer_name=order.get("customer_name"),
-                    customer_phone=order.get("customer_phone"),
+                    customer_phone=valid_phone,
                 )
                 order_already_saved = True
                 print(f"[Système] Commande enregistrée sous le numéro {saved['order_id']}\n")
