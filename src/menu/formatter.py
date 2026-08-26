@@ -114,6 +114,31 @@ def format_menu_with_ids(menu: dict) -> str:
     return "\n".join(lines)
 
 
+def build_vocabulary_hint(menu: dict) -> str:
+    """
+    Construit une liste courte de mots-clés du menu (noms de produits,
+    viandes, sauces, extras), destinée à être donnée à Whisper comme
+    "initial_prompt" pour orienter la reconnaissance vocale vers le
+    vocabulaire attendu (ex: reconnaître "mayonnaise" plutôt qu'un
+    mot proche sans rapport avec la restauration).
+    """
+    words = set()
+
+    for category in menu["categories"]:
+        for item in category["items"]:
+            words.add(item["name"])
+
+        customization = category.get("customization", {})
+        for meat in customization.get("meat_choices", []):
+            words.add(meat)
+        for sauce in customization.get("sauces", []):
+            words.add(sauce)
+        for extra in customization.get("extras", []):
+            words.add(extra["name"])
+
+    return ", ".join(sorted(words))
+
+
 if __name__ == "__main__":
     # Test rapide : génère le texte et l'affiche dans le terminal
     menu = load_menu()

@@ -29,14 +29,23 @@ def _get_model() -> WhisperModel:
     return _model
 
 
-def transcribe_audio(audio_path: str) -> str:
+def transcribe_audio(audio_path: str, vocabulary_hint: str | None = None) -> str:
     """
     Transcrit un fichier audio (wav, mp3, m4a...) en texte français.
     Retourne le texte complet reconnu.
+
+    vocabulary_hint : texte optionnel (ex: liste des produits du menu)
+    donné à Whisper pour orienter la reconnaissance vers un vocabulaire
+    attendu. Utile pour éviter les confusions sur des mots spécifiques
+    à notre contexte (ex: "mayonnaise", "tacos", noms de sauces...).
     """
     model = _get_model()
 
-    segments, info = model.transcribe(audio_path, language="fr")
+    segments, info = model.transcribe(
+        audio_path,
+        language="fr",
+        initial_prompt=vocabulary_hint,
+    )
 
     # Whisper découpe la transcription en "segments" (phrases/passages).
     # On les recolle en un seul texte.

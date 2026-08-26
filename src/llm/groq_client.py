@@ -61,6 +61,7 @@ def send_message(client: Groq, messages: list[dict]) -> str:
         response = client.chat.completions.create(
             model=MODEL_NAME,
             messages=messages,
+            reasoning_format="hidden",
         )
         return response.choices[0].message.content
 
