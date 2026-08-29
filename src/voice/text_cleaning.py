@@ -11,11 +11,39 @@ adapté à être lu à voix haute.
 import re
 
 
+def strip_leaked_reasoning(text: str) -> str:
+    """
+    Filet de sécurité : détecte et retire les fragments de
+    "raisonnement interne" du modèle qui auraient échappé au réglage
+    reasoning_format="hidden" de l'API (ex: "User says: ... Need to
+    ask again."). Ce texte ne doit jamais être vu ni entendu par le
+    client.
+    """
+    # Motifs typiques de raisonnement qui fuite, souvent en anglais,
+    # commençant par des tournures d'analyse interne.
+    leak_patterns = [
+        r"User says:.*?(?=\n|$)",
+        r"The user (says|wants|is asking).*?(?=\n|$)",
+        r"I (need|should|must) (to )?(ask|respond|say).*?(?=\n|\.)",
+        r"This is (still )?not (a )?valid.*?(?=\n|\.)",
+        r"Let me.*?(?=\n|\.)",
+    ]
+
+    cleaned = text
+    for pattern in leak_patterns:
+        cleaned = re.sub(pattern, "", cleaned, flags=re.IGNORECASE)
+
+    return cleaned.strip()
+
+
 def strip_markdown_for_speech(text: str) -> str:
     """
-    Retire les symboles de mise en forme Markdown d'un texte, pour
-    le rendre adapté à la lecture à voix haute.
+    Retire les symboles de mise en forme Markdown ET les éventuelles
+    fuites de raisonnement interne d'un texte, pour le rendre adapté
+    à la lecture à voix haute.
     """
+    text = strip_leaked_reasoning(text)
+
     # Gras/italique : **texte** ou *texte* -> texte
     text = re.sub(r"\*\*(.+?)\*\*", r"\1", text)
     text = re.sub(r"\*(.+?)\*", r"\1", text)

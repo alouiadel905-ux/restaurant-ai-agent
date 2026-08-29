@@ -8,10 +8,12 @@ car son chargement est l'opération la plus lente.
 
 from faster_whisper import WhisperModel
 
-# "base" : bon compromis vitesse/précision pour un CPU sans GPU dédié.
+# "small" : plus précis que "base", surtout sur du vocabulaire moins
+# courant ou des phrases complexes. Un peu plus lent sur CPU, mais
+# ça reste tout à fait utilisable sans GPU dédié.
 # Options possibles, du plus rapide au plus précis :
 # tiny < base < small < medium < large-v3
-MODEL_SIZE = "base"
+MODEL_SIZE = "small"
 
 # Le modèle n'est chargé qu'au premier appel (pas au chargement du
 # fichier), pour ne pas ralentir le démarrage du programme si la

@@ -12,6 +12,7 @@ from src.llm.groq_client import get_client, send_message, LLMUnavailableError
 from src.menu.loader import load_menu
 from src.menu.formatter import format_menu_for_prompt, build_vocabulary_hint
 from src.agent.chat import build_system_prompt
+from src.agent.confirmation_detector import looks_like_confirmation
 from src.agent.order_extractor import extract_order
 from src.order.calculator import calculate_order_total
 from src.order.storage import save_confirmed_order
@@ -20,8 +21,9 @@ from src.voice.microphone import record_audio
 from src.voice.speech_to_text import transcribe_audio
 from src.voice.text_to_speech import speak
 from src.voice.text_cleaning import strip_markdown_for_speech
+from src.voice.vocabulary_correction import correct_transcription
 
-RECORDING_DURATION_SECONDS = 6
+RECORDING_DURATION_SECONDS = 12
 
 
 def run_voice_conversation() -> None:
@@ -58,7 +60,14 @@ def run_voice_conversation() -> None:
         audio_path = record_audio(RECORDING_DURATION_SECONDS)
 
         # Étape 2 : transcription en texte, orientée par le vocabulaire du menu
-        user_text = transcribe_audio(str(audio_path), vocabulary_hint=vocabulary_hint)
+        raw_text = transcribe_audio(str(audio_path), vocabulary_hint=vocabulary_hint)
+
+        # Étape 2bis : correction floue des mots proches du vocabulaire
+        # du menu (ex: "sausse angérienne" -> "sauce Algérienne").
+        user_text = correct_transcription(raw_text, menu)
+
+        if user_text != raw_text:
+            print(f"Client (transcrit brut) : {raw_text}")
         print(f"Client (transcrit) : {user_text}")
 
         if not user_text:
@@ -83,8 +92,10 @@ def run_voice_conversation() -> None:
         speak(strip_markdown_for_speech(reply))
 
         # Sauvegarde automatique de la commande confirmée (même logique
-        # que dans chat.py et l'API).
-        if not order_already_saved:
+        # que dans chat.py et l'API). On n'appelle l'extraction (coûteuse
+        # en quota API) que si le message ressemble à une confirmation,
+        # pas après chaque message.
+        if not order_already_saved and looks_like_confirmation(user_text):
             order = extract_order(client, messages, menu)
 
             is_confirmed = order.get("status") == "confirmed"

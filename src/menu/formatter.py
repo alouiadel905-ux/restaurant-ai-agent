@@ -136,7 +136,13 @@ def build_vocabulary_hint(menu: dict) -> str:
         for extra in customization.get("extras", []):
             words.add(extra["name"])
 
-    return ", ".join(sorted(words))
+        # Mots-clés fixes toujours utiles à la reconnaissance vocale,
+        # même s'ils ne sont pas des produits du menu (ex: la ville de
+        # livraison, répétée souvent en conversation).
+        words.add("Calais")
+        words.add(menu["restaurant"])
+
+        return ", ".join(sorted(words))
 
 
 if __name__ == "__main__":

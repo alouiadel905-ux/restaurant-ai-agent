@@ -16,6 +16,7 @@ from src.menu.loader import load_menu
 from src.menu.formatter import format_menu_for_prompt
 from src.agent.chat import build_system_prompt
 from src.agent.order_extractor import extract_order
+from src.agent.confirmation_detector import looks_like_confirmation
 from src.order.calculator import calculate_order_total
 from src.order.storage import save_confirmed_order
 from src.order.validation import validate_and_normalize_phone
@@ -91,9 +92,11 @@ def chat(request: ChatRequest):
 
     # Vérification et sauvegarde automatique si la commande est
     # confirmée et complète (même logique que dans chat.py terminal).
+    # On n'appelle l'extraction que si le message ressemble à une
+    # confirmation, pour économiser le quota API.
     order_confirmed = False
 
-    if not session["order_saved"]:
+    if not session["order_saved"] and looks_like_confirmation(request.message):
         order = extract_order(client, session["messages"], menu)
 
         is_confirmed = order.get("status") == "confirmed"
